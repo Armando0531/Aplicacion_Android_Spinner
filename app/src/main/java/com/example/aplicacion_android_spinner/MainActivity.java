@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinerConvertir.setOnItemSelectedListener(this);
         cajaPrimerNumero=findViewById(R.id.CajaNumeroIngresado);
         cajaRes=findViewById(R.id.cajaResultado);
+
+        cajaRes.setEnabled(false);
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -59,34 +61,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             System.out.println("Entro en el spiner 2");
             if(cajaPrimerNumero.getText().toString().isEmpty()){
                 cajaPrimerNumero.setText(0+"");
+            }
+            if(spinnerOperaciones.getSelectedItem().toString().equals("C°")){
+                if(spinerConvertir.getSelectedItemId()==1){
+                    double cantidadC=Double.parseDouble(cajaPrimerNumero.getText().toString());
+                    double res=calculos.celsiusAFahrenheit(cantidadC);
+                    cajaRes.setText(df.format(res));
+                }else if(spinerConvertir.getSelectedItemId()==2){
+                    double cantidadC=Double.parseDouble(cajaPrimerNumero.getText().toString());
+                    cajaRes.setText(df.format(cantidadC+273.15));
                 }
-                if(spinnerOperaciones.getSelectedItem().toString().equals("C°")){
-                    if(spinerConvertir.getSelectedItemId()==1){
-                        double cantidadC=Double.parseDouble(cajaPrimerNumero.getText().toString());
-                        double res=calculos.celsiusAFahrenheit(cantidadC);
-                        cajaRes.setText(df.format(String.valueOf(res)));
-                    }else if(spinerConvertir.getSelectedItemId()==2){
-                        double cantidadC=Double.parseDouble(cajaPrimerNumero.getText().toString());
-                        cajaRes.setText(df.format(String.valueOf(cantidadC+273.15)));
-                    }
-                }else if(spinnerOperaciones.getSelectedItem().toString().equals("F°")){
-                    if(spinerConvertir.getSelectedItemId()==1){
-                        double cantidadF=Double.parseDouble(cajaPrimerNumero.getText().toString());
-                        double res=(cantidadF-32)/1.8000;
-                        cajaRes.setText(res+"");
-                    }else if(spinerConvertir.getSelectedItemId()==2){
-                        double cantidadF=Double.parseDouble(cajaPrimerNumero.getText().toString());
-                        double res=((cantidadF-32)/1.8000)+273.15;
-                        cajaRes.setText(res+"");
-                    }
-                }else if (spinnerOperaciones.getSelectedItem().toString().equals("K°")){
-                    if(spinerConvertir.getSelectedItemId()==1){
+            }else if(spinnerOperaciones.getSelectedItem().toString().equals("F°")){
+                if(spinerConvertir.getSelectedItemId()==1){
+                    double cantidadF=Double.parseDouble(cajaPrimerNumero.getText().toString());
+                    double res=(cantidadF-32)/1.8000;
+                    cajaRes.setText(res+"");
+                }else if(spinerConvertir.getSelectedItemId()==2){
+                    double cantidadF=Double.parseDouble(cajaPrimerNumero.getText().toString());
+                    double res=((cantidadF-32)/1.8000)+273.15;
+                    cajaRes.setText(res+"");
+                }
+            }else if (spinnerOperaciones.getSelectedItem().toString().equals("K°")){
+                if(spinerConvertir.getSelectedItemId()==1){
 
-                    }else if(spinerConvertir.getSelectedItemId()==2){
+                    double cantidadK=Double.parseDouble(cajaPrimerNumero.getText().toString());
+                    cajaRes.setText(df.format(cantidadK-273.15));
+                }else if(spinerConvertir.getSelectedItemId()==2){
 
-                    }
+                    double cantidadK=Double.parseDouble(cajaPrimerNumero.getText().toString());
+                    double res=((cantidadK-273)*1.8000)+32;
+                    cajaRes.setText(df.format(res));
+
                 }
             }
+        }
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {}
